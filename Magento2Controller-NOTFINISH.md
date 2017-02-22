@@ -1,0 +1,7 @@
+##Magento2 Controller##
+[http://devdocs.magento.com/guides/v2.0/extension-dev-guide/depend-inj.html](http://devdocs.magento.com/guides/v2.0/extension-dev-guide/depend-inj.html)
+[http://magento.stackexchange.com/questions/68793/magento-2-rewrite-controller](http://magento.stackexchange.com/questions/68793/magento-2-rewrite-controller)
+[http://magento.stackexchange.com/questions/68793/magento-2-rewrite-controller](http://magento.stackexchange.com/questions/68793/magento-2-rewrite-controller)
+[http://magento.stackexchange.com/questions/4416/magento-jquery-ajax-how-do-i-reload-just-parts-of-my-custom-module-instead](http://magento.stackexchange.com/questions/4416/magento-jquery-ajax-how-do-i-reload-just-parts-of-my-custom-module-instead)
+[http://magento.stackexchange.com/questions/109119/dynamic-create-block-in-magento-2-and-send-as-ajax-call-response](http://magento.stackexchange.com/questions/109119/dynamic-create-block-in-magento-2-and-send-as-ajax-call-response)
+[http://magento.stackexchange.com/questions/101687/get-parent-name-of-current-category-on-category-list-pages-in-magento-2](http://magento.stackexchange.com/questions/101687/get-parent-name-of-current-category-on-category-list-pages-in-magento-2M)
