@@ -50,6 +50,7 @@ listen = 127.0.0.1:9000
         Allow from all
         Require all granted
     </Directory>
+    Timeout 600
 
     ErrorLog "logs/local.hollywood.com-error_log"
     CustomLog "logs/local.hollywood.com-access_log" common
@@ -72,6 +73,8 @@ listen = 127.0.0.1:9000
     </Directory>
 
     ProxyRequests Off
+    ProxyTimeout 600
+    Timeout 600
     <FilesMatch \.php$>
         # 2.4.10+ can proxy to unix socket
         # SetHandler "proxy:unix:/var/run/php5-fpm.sock|fcgi://localhost/"
