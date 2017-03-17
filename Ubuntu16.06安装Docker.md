@@ -55,6 +55,10 @@ sudo docker run -v /var/www/mage2 --name magento2_contener busybox true
 sudo docker run --name magneto2_apache2 -d -p 80:80 -p 8888:8888 --link mysql_server --volumes-from magento2_contener magento2:latest
 ```
 
+##Docker批量删除容器##
+```shell
+docker rm $(docker ps -a -q)
+```
 
 
 ##Documents##
