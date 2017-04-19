@@ -59,7 +59,17 @@ sudo docker run --name magneto2_apache2 -d -p 80:80 -p 8888:8888 --link mysql_se
 ```shell
 docker rm $(docker ps -a -q)
 ```
-
+##Docker加速器##
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://h3rk1gi9.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
 
 ##Documents##
 [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04#step-1-%E2%80%94-installing-docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04#step-1-%E2%80%94-installing-docker)
@@ -75,3 +85,7 @@ docker rm $(docker ps -a -q)
 [https://github.com/docker/kitematic/issues/49](https://github.com/docker/kitematic/issues/49)
 [https://github.com/docker/kitematic/releases](https://github.com/docker/kitematic/releases)
 [https://blog.confirm.ch/backup-mysql-mariadb-docker-container/](https://blog.confirm.ch/backup-mysql-mariadb-docker-container/)
+[docker使用阿里云Docker镜像库加速(修订版)](http://blog.csdn.net/bwlab/article/details/50542261)
+[阿里Docker容器](https://dev.aliyun.com/search.html)
+
+[Docker私有仓库](http://blog.csdn.net/wangtaoking1/article/details/44180901)
