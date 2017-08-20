@@ -1,0 +1,2 @@
+##Change shipping price & handling fee on the fly in Magento##
+[http://www.blog.magepsycho.com/change-shipping-price-handling-fee-fly-magento/](http://www.blog.magepsycho.com/change-shipping-price-handling-fee-fly-magento/)

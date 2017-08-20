@@ -10,6 +10,7 @@
 [使用OpenSSL工具生成密钥](https://doc.open.alipay.com/docs/doc.htm?articleId=106130&docType=1)
 [windows生成密钥](https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=105971&docType=1)
 [自定义授权](http://www.moke8.com/article-10287-1.html)
+[APP配置](https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.ryV3KF&treeId=291&articleId=105972&docType=1)
 ```shell
 OpenSSL> genrsa -out app_private_key.pem   1024  #生成私钥
 OpenSSL> pkcs8 -topk8 -inform PEM -in app_private_key.pem -outform PEM -nocrypt -out app_private_key_pkcs8.pem #Java开发者需要将私钥转换成PKCS8格式
