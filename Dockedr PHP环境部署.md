@@ -1,4 +1,7 @@
 ##Dockedr PHP环境部署##
+Author: Daniel luo
+email: luo3555@qq.com
+
 [1. 安装Docker](#安装Docker)
 [2. Docker基本命令](#Docker基本命令)
 [3. 搭建Nginx + PHP + Mysql环境](#搭建Nginx + PHP + Mysql环境)
@@ -7,6 +10,8 @@
 
 ###<span id="安装Docker">1. 安装Docker</span>###
 
+[https://www.docker.com/community-edition#download](https://www.docker.com/community-edition#download)
+[https://download.daocloud.io/Docker_Mirror/Docker](https://download.daocloud.io/Docker_Mirror/Docker)
 
 ***
 
@@ -45,6 +50,12 @@ docker rmi $(docker images -q)
 ```shell
 docker inspect container_name | grep Mounts -A 20
 ```
+
+8. docker-compose 启动容器
+```shell
+docker-compose -f php-env.yml up -d
+```
+
 ***
 
 ###<span id="搭建Nginx + PHP + Mysql环境">3. 搭建Nginx + PHP + Mysql环境</span>###
@@ -68,7 +79,7 @@ phpenv.yaml
 
 **Dockerfile**
 ```Dockerfile
-FROM ubuntu:trusty
+FROM daocloud.io/library/ubuntu:trusty-20170330
 
 MAINTAINER Daniel Luo <luo3555@qq.com>
 
@@ -104,6 +115,12 @@ RUN apt-get -y --force-yes --no-install-recommends install \
     php7.0-sqlite3 php7.0-gd php7.0-json php7.0-mcrypt php7.0-intl php7.0-mbstring \
     php7.0-bcmath
 
+RUN apt-get -y --force-yes --no-install-recommends install \
+    php7.1-cli php7.1-fpm php7.1-common php7.1-mysql \
+    php7.1-curl php7.1-xml php7.1-zip php7.1-soap php7.1-xsl \
+    php7.1-sqlite3 php7.1-gd php7.1-json php7.1-mcrypt php7.1-intl php7.1-mbstring \
+    php7.1-bcmath
+
 # configure NGINX as non-daemon
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
@@ -124,6 +141,8 @@ VOLUME ["/var/www"]
 
 # copy config file for Supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Superisor mountable directory for config
+VOLUME ["/etc/supervisor/conf.d"]
 
 # backup default default config for NGINX
 RUN cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
@@ -181,6 +200,173 @@ server {
 }
 ```
 
+**supervisord.conf**
+```text
+[supervisord]
+nodaemon=true
+
+[program:php5.6-fpm]
+command=/usr/sbin/php-fpm5.6
+
+[program:php7.0-fpm]
+command=/usr/sbin/php-fpm7.0
+
+[program:php7.1-fpm]
+command=/usr/sbin/php-fpm7.1
+
+[program:nginx]
+command=/usr/sbin/nginx
+```
+**php-env.yml**
+
+```yml
+version: '2.0'
+
+services:
+    db:
+      image: 'daocloud.io/library/mysql:5.6.17'
+      environment:
+          MYSQL_ROOT_PASSWORD: 12345abc
+          MYSQL_ALLOW_EMPTY_PASSWORD: 0
+      ports:
+          - 3306:3306
+      volumes:
+            - /Users/Daniel.luo/www/mysql:/var/lib/mysql
+
+    nginx:
+      image: 'nginx-php:1.0'
+      ports:
+          - 80:80
+          - 443:443
+      links:
+          - db:db
+      depends_on:
+          - db
+      volumes:
+          - /Users/Daniel.luo/www:/var/www
+          - /Users/Daniel.luo/www/nginx/sites-enabled:/etc/nginx/sites-enabled
+          - /Users/Daniel.luo/www/nginx/log:/var/log/nginx
+```
+**使用你的路径替换**`/Users/Daniel.luo/www`
+
+***
+
+##其他配置
+
+
+Magento1.x vhost
+
+```conf
+server {
+    listen 80;
+    server_name local.example.com; #修改为你的服务器名
+    access_log  /var/log/nginx/magento1924.access.log;
+    error_log   /var/log/nginx/magento1924.error.log;
+    location / {
+        root /var/www/html/local.example.com/public_html;
+        index  index.php index.html index.htm;
+       # rewrite ^(/index.php)?/minify/([^/]+)(/.*.(js|css))$ /lib/minify/m.php?f=$3&d=$2 last;
+       #上面的这条Rewrite规则是为了性能优化，安装fooman-speedster插件时需要的， 如果你没有安装这个插件，请注释掉这条规则。
+
+        if (-f $request_filename) {
+               expires 30d;
+               break;
+        }
+        if (!-e $request_filename) {
+               rewrite ^(.+)$ /index.php last;
+        }
+        #上面的两条Rewrite规则可以确保Magento在Nginx下完成正常Rewrite工作。
+        location ~* \.(ico|jpg|jpeg|png|gif|svg|js|css|swf|eot|ttf|otf|woff|woff2)$ {
+        add_header Cache-Control "public";
+        add_header X-Frame-Options "SAMEORIGIN";
+        expires +1y;
+        if (!-f $request_filename) {
+                rewrite ^/pub/static/(version\d*/)?(.*)$ /pub/static.php?resource=$2 last;
+        }
+    }
+    location ~* \.(zip|gz|gzip|bz2|csv|xml)$ {
+        add_header Cache-Control "no-store";
+        add_header X-Frame-Options "SAMEORIGIN";
+        expires    off;
+        if (!-f $request_filename) {
+            rewrite ^/pub/static/(version\d*/)?(.*)$ /pub/static.php?resource=$2 last;
+        }
+    }
+    #location ~ \.php$ {
+        #fastcgi_pass   127.0.0.1:9001;
+        #fastcgi_index  index.php;
+        #fastcgi_param  SCRIPT_NAME $fastcgi_script_name;
+        #fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;  #修改为你的Magento目录夹
+        #include        fastcgi_params;  #请检查fastcgi_params文件是否存在， 默认是有的
+    #}
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php5.6-fpm.sock;
+    }
+
+    location /api {
+        rewrite ^/api/rest /api.php?type=rest last;
+        rewrite ^/api/v2_soap /api.php?type=v2_soap last;
+        rewrite ^/api/soap /api.php?type=soap last;
+    }
+    location /app/etc {
+        deny all;
+    }
+    #上面这条规则禁止访问/app/etc/目录夹，防止别人非法读取配置文件，得到密码等信息
+    }
+    ## These locations would be hidden by .htaccess normally
+    location ^~ /app/                { deny all; }
+        location ^~ /includes/           { deny all; }
+        location ^~ /lib/                { deny all; }
+        location ^~ /media/downloadable/ { deny all; }
+        location ^~ /pkginfo/            { deny all; }
+        location ^~ /report/config.xml   { deny all; }
+        location ^~ /var/                { deny all; } 
+        location  /. { ## Disable .htaccess and other hidden files
+            return 404;
+        }
+    location @handler { ## Magento uses a common front handler
+            rewrite / /index.php;
+        }
+    location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
+            rewrite ^(.*.php)/ $1 last;
+        }
+    location ~ .php$ { ## Execute PHP scripts
+            rewrite / /index.php last; 
+    }
+    location ~* (\.htaccess$|\.git) {
+            deny all;
+    }
+gzip on;
+#gzip_http_version 1.1;
+#gzip_vary on;
+gzip_disable "msie6";
+gzip_comp_level 6;
+gzip_min_length 700;
+gzip_buffers 16 8k;
+gzip_proxied any;
+gzip_types
+text/plain
+text/css
+text/js
+text/xml
+text/javascript
+application/x-httpd-php
+application/javascript
+application/x-javascript
+application/json
+application/xml
+application/xml+rss
+image/svg+xml
+image/jpeg
+image/gif
+image/png;
+gzip_vary on;
+}
+
+```
+
 Magento2 vhost
 ```conf
 server {
@@ -194,19 +380,4 @@ server {
     }
     error_log /var/log/nginx/default.error.log;
 }
-```
-
-**supervisord.conf**
-```text
-[supervisord]
-nodaemon=true
-
-[program:php5.6-fpm]
-command=/usr/sbin/php-fpm5.6
-
-[program:php7.0-fpm]
-command=/usr/sbin/php-fpm7.0
-
-[program:nginx]
-command=/usr/sbin/nginx
 ```
