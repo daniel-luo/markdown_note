@@ -1,4 +1,5 @@
 ##Magento2 Plgin##
+[http://devdocs.magento.com/guides/v2.0/extension-dev-guide/plugins.html](http://devdocs.magento.com/guides/v2.0/extension-dev-guide/plugins.html)
 [http://magento.stackexchange.com/questions/114128/magento-2-plugin-before-around-after-interaction](http://magento.stackexchange.com/questions/114128/magento-2-plugin-before-around-after-interaction)
 
 [https://cyrillschumacher.com/magento2-list-of-all-dispatched-events/](https://cyrillschumacher.com/magento2-list-of-all-dispatched-events/)

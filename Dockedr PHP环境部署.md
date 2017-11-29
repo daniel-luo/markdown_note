@@ -5,11 +5,13 @@ email: luo3555@qq.com
 [1. 安装Docker](#安装Docker)
 [2. Docker基本命令](#Docker基本命令)
 [3. 搭建Nginx + PHP + Mysql环境](#搭建Nginx + PHP + Mysql环境)
+[4. 相关文档](#相关文档)
 
 ***
 
 ###<span id="安装Docker">1. 安装Docker</span>###
-
+[安装步骤](http://www.docker.org.cn/book/install/win7-win8-install-docker-40.html)
+[国内下载地址](https://get.daocloud.io/toolbox/)
 [https://www.docker.com/community-edition#download](https://www.docker.com/community-edition#download)
 [https://download.daocloud.io/Docker_Mirror/Docker](https://download.daocloud.io/Docker_Mirror/Docker)
 
@@ -54,6 +56,25 @@ docker inspect container_name | grep Mounts -A 20
 8. docker-compose 启动容器
 ```shell
 docker-compose -f php-env.yml up -d
+```
+
+9. 定义Tag
+```shell
+docker tag image_name:tag repository_name
+```
+eg:`docker tag alpine:3.4 firewarm/alpine:3.4`
+注意:通常`repository_name`是由你的`DockerId/TAG`组成的
+
+10. 推送本地镜像到DockerHub
+```shell
+docker login
+docker push YOUR_DOCKER_ID/LOCAL_IMAGE:TAG
+```
+
+11. 已非root的方式启动容器,在运行前添加用户并将用户切换到新加的用户下
+```shell
+RUN useradd noroot -u 1000 -s /bin/bash
+USER noroot
 ```
 
 ***
@@ -381,3 +402,12 @@ server {
     error_log /var/log/nginx/default.error.log;
 }
 ```
+
+###<span id="相关文档">4. 相关文档</span>###
+[http://dockone.io/article/834](http://dockone.io/article/834)
+[Docker不能识别外部软链接](https://www.v2ex.com/amp/t/381563)
+[https://yq.aliyun.com/ask/32406/?spm=5176.100241.0.0.yJlajg](https://yq.aliyun.com/ask/32406/?spm=5176.100241.0.0.yJlajg)
+[ADD和COPY](http://cloud.51cto.com/art/201411/457338.htm)
+[已非root的方式启动容器](https://stackoverflow.com/questions/29891010/how-to-run-docker-image-as-a-non-root-user)
+[Docker下root与非root启动容器内应用](http://blog.csdn.net/yygydjkthh/article/details/47694929)
+[https://docs.openshift.com/online/getting_started/beyond_the_basics.html#getting-started-beyond-the-basics](https://docs.openshift.com/online/getting_started/beyond_the_basics.html#getting-started-beyond-the-basics)
