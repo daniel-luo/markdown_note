@@ -411,3 +411,6 @@ server {
 [已非root的方式启动容器](https://stackoverflow.com/questions/29891010/how-to-run-docker-image-as-a-non-root-user)
 [Docker下root与非root启动容器内应用](http://blog.csdn.net/yygydjkthh/article/details/47694929)
 [https://docs.openshift.com/online/getting_started/beyond_the_basics.html#getting-started-beyond-the-basics](https://docs.openshift.com/online/getting_started/beyond_the_basics.html#getting-started-beyond-the-basics)
+[如何push一个docker镜像到DockerHub上](http://blog.csdn.net/gsying1474/article/details/53123598)
+[docker 创建新的镜像到私有仓库](http://blog.csdn.net/zhaoyangjian724/article/details/50925508)
+[docker commit](https://segmentfault.com/a/1190000002567459)

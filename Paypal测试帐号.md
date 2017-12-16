@@ -5,6 +5,20 @@
 `12345@abc`
 
 * * *
+
+**username**`daniel.luo-facilitator@silksoftware.com`
+**API UserName**`daniel.luo-facilitator_api1.silksoftware.com`
+**Password**`1383894225`
+**Signature**`AoBl5PNP9dkKjUn9lam9TX32h6ajAZyHq.SbP1.ONtvVNMClhv.oNS9c`
+
+* * *
+
+**Test Address**
+`15440 Laguna Canyon Road, Suite 210`
+`Irvine, CA 92618`
+`(949) 748 3706`
+
+* * *
 Account information
 
 Email ID:

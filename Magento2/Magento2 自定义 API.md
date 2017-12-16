@@ -139,6 +139,15 @@ class Hello implements HelloInterface
 php bin/magento setup:upgrade
 ```
 - - -
+**API允许请求头部**
+1. `application/json`
+2. `application/xml`
+3. `application/xhtml+xml`
+4. `text/xml`
+
+相关 Class `public_html/vendor/magento/framework/Webapi/Rest/Request/DeserializerFactory.php` **Line 49**
+Search Keyword `Server cannot understand Content-Type HTTP header media type %1`
+- - -
 测试
 `http://local.magento2.com/rest/V1/test/hello/Daniel`
 
