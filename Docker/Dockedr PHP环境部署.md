@@ -77,6 +77,16 @@ RUN useradd noroot -u 1000 -s /bin/bash
 USER noroot
 ```
 
+12. 删除所有未运行的容器
+```shell
+sudo docker container prune
+```
+
+13. 清楚标记为none的镜像
+```shell
+docker rmi $(docker images -f "dangling=true" -q)
+```
+
 ***
 
 ###<span id="搭建Nginx + PHP + Mysql环境">3. 搭建Nginx + PHP + Mysql环境</span>###
@@ -414,3 +424,8 @@ server {
 [如何push一个docker镜像到DockerHub上](http://blog.csdn.net/gsying1474/article/details/53123598)
 [docker 创建新的镜像到私有仓库](http://blog.csdn.net/zhaoyangjian724/article/details/50925508)
 [docker commit](https://segmentfault.com/a/1190000002567459)
+[Mac中设置docker命令行自动补全的方法](http://blog.csdn.net/xts_huangxin/article/details/65631137)
+[docker限制内存大小](http://blog.csdn.net/goflyfreely/article/details/53155729)
+[如何批量删除Docker中已经停止的容器](http://blog.csdn.net/CSDN_duomaomao/article/details/78587103)
+[Docker中images中none的镜像是否可以删除](http://blog.csdn.net/goflyfreely/article/details/53149894)
+[DOCKER 给运行中的容器添加映射端口](http://blog.csdn.net/github_29237033/article/details/46632647)

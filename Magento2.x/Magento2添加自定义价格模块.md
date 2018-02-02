@@ -1,0 +1,1 @@
+[Custom RRP price-module on product detail page](https://magento.stackexchange.com/questions/161330/custom-rrp-price-module-on-product-detail-page)

@@ -6,8 +6,22 @@
 [http://magento.stackexchange.com/questions/32957/how-to-instantiate-a-block-in-magento2](http://magento.stackexchange.com/questions/32957/how-to-instantiate-a-block-in-magento2)
 
 
+##Magento2 Collection
+[https://magento.stackexchange.com/questions/188931/magento-2-how-to-load-product-collection-category-collection-load-product-by-i](https://magento.stackexchange.com/questions/188931/magento-2-how-to-load-product-collection-category-collection-load-product-by-i)
+
+##Magento2 use KO
+[https://magento.stackexchange.com/questions/103861/how-to-use-knockout-js-within-magento-2](https://magento.stackexchange.com/questions/103861/how-to-use-knockout-js-within-magento-2)
+
 ##Magento2 Rewrite Conroller##
 [http://magento.stackexchange.com/questions/86497/how-to-override-core-block-model-and-controller-in-magento2](http://magento.stackexchange.com/questions/86497/how-to-override-core-block-model-and-controller-in-magento2)
+
+
+##Magento2 生产模式编译后api报错
+Error Info
+```text
+V1/carts/mine/billing-address returning %fieldName is a required field.
+```
+[https://github.com/magento/magento2/issues/7299](https://github.com/magento/magento2/issues/7299)
 
 
 ##Question##
