@@ -75,6 +75,7 @@ docker push YOUR_DOCKER_ID/LOCAL_IMAGE:TAG
 ```shell
 RUN useradd noroot -u 1000 -s /bin/bash
 USER noroot
+USER nobody
 ```
 
 12. 删除所有未运行的容器
